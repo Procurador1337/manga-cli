@@ -1,0 +1,7 @@
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/manga-cli.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/edit_cache.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/rebuild_cache.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/list_install_components.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/install.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/install/local.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/install/strip.dir
