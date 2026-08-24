@@ -1,0 +1,3 @@
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/manga-cli.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/edit_cache.dir
+/home/cayo/C++Projects/manga-cli/build/Desktop_Debug/CMakeFiles/rebuild_cache.dir

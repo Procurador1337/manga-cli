@@ -1,9 +1,7 @@
-#include <iostream>
-
-using namespace std;
+#include "cli.h"
 
 int main()
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    CLI cli;
+    return cli.run();
 }
