@@ -1,13 +1,13 @@
-#ifndef MANGA_H
-#define MANGA_H
+#ifndef CHAPTER_H
+#define CHAPTER_H
 
 #include <string>
 
-class Manga
+class Chapter
 {
 public:
-    Manga(const std::string& ID,
-          const std::string& Name);
+    Chapter(const std::string& ID,
+            const std::string& Name);
 
     std::string getID() const;
     std::string getName() const;
