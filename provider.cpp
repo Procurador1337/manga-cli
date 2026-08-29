@@ -81,12 +81,16 @@ std::vector<Manga> Provider::searchManga(
 }
 
 std::vector<Chapter> Provider::getChapters(
-    const std::string& MangaID
+    const std::string& MangaID,
+    int Offset,
+    int& OutTotal
     )
 {
     NetworkClient Client;
 
     std::vector<Chapter> Results;
+
+    OutTotal = 0;
 
     QUrl RequestURL(
         QString::fromStdString(
@@ -99,6 +103,7 @@ std::vector<Chapter> Provider::getChapters(
     Parameters.addQueryItem("order[volume]", "asc");
     Parameters.addQueryItem("order[chapter]", "asc");
     Parameters.addQueryItem("limit", "100");
+    Parameters.addQueryItem("offset", QString::number(Offset));
 
     RequestURL.setQuery(Parameters);
 
@@ -110,7 +115,11 @@ std::vector<Chapter> Provider::getChapters(
         QJsonDocument Document =
             QJsonDocument::fromJson(QByteArray::fromStdString(Response));
 
-        QJsonArray DataArray = Document.object().value("data").toArray();
+        QJsonObject Root = Document.object();
+
+        OutTotal = Root.value("total").toInt();
+
+        QJsonArray DataArray = Root.value("data").toArray();
 
         for (const QJsonValue& Entry : DataArray)
         {

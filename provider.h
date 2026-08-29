@@ -15,6 +15,12 @@ public:
     std::vector<Chapter> getChapters(
         const std::string& MangaID
         );
+
+    std::vector<Chapter> getChapters(
+        const std::string& MangaID,
+        int Offset,
+        int& OutTotal
+        );
 };
 
 #endif

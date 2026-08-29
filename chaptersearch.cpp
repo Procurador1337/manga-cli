@@ -1,9 +1,9 @@
 #include "chaptersearch.h"
 #include "provider.h"
 
-std::vector<Chapter> ChapterSearch::search(const Manga& SelectedManga)
+std::vector<Chapter> ChapterSearch::search(const Manga& SelectedManga, int Offset, int& OutTotal)
 {
     Provider ProviderClient;
 
-    return ProviderClient.getChapters(SelectedManga.getID());
+    return ProviderClient.getChapters(SelectedManga.getID(), Offset, OutTotal);
 }

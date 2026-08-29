@@ -53,30 +53,59 @@ int CLI::run()
 
     ChapterSearch ChapterSearcher;
 
-    std::vector<Chapter> ChapterResults =
-        ChapterSearcher.search(SelectedManga);
+    int Offset = 0;
+    int Total = 0;
+    std::vector<Chapter> ChapterResults;
+    int ChapterChoice = 0;
 
-    std::cout << "\n"
-              << SelectedManga.getName()
-              << " Chapters:\n\n";
-
-    for (std::size_t Index = 0;
-         Index < ChapterResults.size();
-         ++Index)
+    while (true)
     {
-        std::cout
-            << Index + 1
-            << ". "
-            << ChapterResults[Index].getName()
-            << '\n';
+        ChapterResults =
+            ChapterSearcher.search(SelectedManga, Offset, Total);
+
+        std::cout << "\n"
+                  << SelectedManga.getName()
+                  << " Chapters:\n\n";
+
+        for (std::size_t Index = 0;
+             Index < ChapterResults.size();
+             ++Index)
+        {
+            std::cout
+                << Index + 1
+                << ". "
+                << ChapterResults[Index].getName()
+                << '\n';
+        }
+
+        bool HasNextPage =
+            (Offset + static_cast<int>(ChapterResults.size())) < Total;
+
+        int NextPageOption =
+            static_cast<int>(ChapterResults.size()) + 1;
+
+        if (HasNextPage)
+        {
+            std::cout
+                << NextPageOption
+                << ". Next page\n";
+        }
+
+        std::cout << '\n';
+
+        int MaxChoice =
+            HasNextPage ? NextPageOption : static_cast<int>(ChapterResults.size());
+
+        ChapterChoice = Selector.getChoice(MaxChoice);
+
+        if (HasNextPage && ChapterChoice == NextPageOption)
+        {
+            Offset += static_cast<int>(ChapterResults.size());
+            continue;
+        }
+
+        break;
     }
-
-    std::cout << '\n';
-
-    int ChapterChoice =
-        Selector.getChoice(
-            static_cast<int>(ChapterResults.size())
-            );
 
     Chapter SelectedChapter =
         ChapterResults[ChapterChoice - 1];

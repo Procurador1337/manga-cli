@@ -10,6 +10,7 @@ class ChapterSearch
 {
 public:
     std::vector<Chapter> search(const Manga& SelectedManga);
+    std::vector<Chapter> search(const Manga& SelectedManga, int Offset, int& OutTotal);
 };
 
 #endif
