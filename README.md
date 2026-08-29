@@ -44,12 +44,13 @@ mkdir build
 cd build
 cmake ..
 cmake --build .
+sudo cmake --install .
 ```
 
 ## Usage
 
 ```bash
-./manga-cli
+manga-cli
 ```
 
 Enter a manga title, pick a result, pick a chapter, and mpv will open with the pages. Use mpv's controls to move between pages:
