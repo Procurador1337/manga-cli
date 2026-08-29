@@ -1,4 +1,5 @@
 #include "cli.h"
+#include "pageviewer.h"
 #include "mangasearch.h"
 #include "chaptersearch.h"
 #include "selection.h"
@@ -118,6 +119,9 @@ int CLI::run()
     std::cout << "Chapter: "
               << SelectedChapter.getName()
               << '\n';
+
+    PageViewer Viewer;
+    Viewer.view(SelectedChapter.getID());
 
     return 0;
 }

@@ -21,6 +21,8 @@ public:
         int Offset,
         int& OutTotal
         );
+
+    std::vector<std::string> getPageURLs(const std::string& ChapterID);
 };
 
 #endif

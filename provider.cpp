@@ -154,3 +154,56 @@ std::vector<Chapter> Provider::getChapters(
 
     return Results;
 }
+
+std::vector<std::string> Provider::getPageURLs(
+    const std::string& ChapterID
+    )
+{
+    NetworkClient Client;
+
+    std::vector<std::string> PageURLs;
+
+    QUrl RequestURL(
+        QString::fromStdString(
+            "https://api.mangadex.org/at-home/server/" + ChapterID
+            )
+        );
+
+    try
+    {
+        std::string Response =
+            Client.get(RequestURL.toString().toStdString());
+
+        QJsonDocument Document =
+            QJsonDocument::fromJson(QByteArray::fromStdString(Response));
+
+        QJsonObject Root = Document.object();
+
+        std::string BaseURL =
+            Root.value("baseUrl").toString().toStdString();
+
+        QJsonObject ChapterObject =
+            Root.value("chapter").toObject();
+
+        std::string Hash =
+            ChapterObject.value("hash").toString().toStdString();
+
+        QJsonArray DataArray =
+            ChapterObject.value("data").toArray();
+
+        for (const QJsonValue& Entry : DataArray)
+        {
+            std::string Filename = Entry.toString().toStdString();
+
+            PageURLs.push_back(
+                BaseURL + "/data/" + Hash + "/" + Filename
+                );
+        }
+    }
+    catch (const std::exception& Error)
+    {
+        std::cerr << "Network error: " << Error.what() << '\n';
+    }
+
+    return PageURLs;
+}

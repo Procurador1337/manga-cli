@@ -12,13 +12,15 @@ add_executable(manga-cli
     cli.cpp
     manga.h manga.cpp
     cli.h
-    manga.h
     mangasearch.h mangasearch.cpp
     selection.h selection.cpp
     chapter.h chapter.cpp
     chaptersearch.h chaptersearch.cpp
     provider.h provider.cpp
     networkclient.h networkclient.cpp
+    terminalutils.h terminalutils.cpp
+    imagerender.h imagerender.cpp
+    pageviewer.h pageviewer.cpp
 )
-
-target_link_libraries(manga-cli PRIVATE Qt6::Network)
+find_package(Qt6 REQUIRED COMPONENTS Network Gui)
+target_link_libraries(manga-cli PRIVATE Qt6::Network Qt6::Gui)
