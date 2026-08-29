@@ -23,6 +23,8 @@ public:
         );
 
     std::vector<std::string> getPageURLs(const std::string& ChapterID);
+
+    int getChapterCount(const std::string& MangaID);
 };
 
 #endif

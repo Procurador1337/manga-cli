@@ -24,12 +24,23 @@ void ImageRenderer::render(
         return;
     }
 
+    std::cerr
+        << "Decoded image: "
+        << Image.width() << "x" << Image.height()
+        << " | MaxColumns=" << MaxColumns
+        << '\n';
+
     int TargetWidth = MaxColumns;
 
     int TargetHeight =
         static_cast<int>(
             (static_cast<double>(Image.height()) / Image.width()) * TargetWidth
             );
+
+    std::cerr
+        << "Target size: "
+        << TargetWidth << "x" << TargetHeight
+        << '\n';
 
     QImage Scaled =
         Image.scaled(
@@ -58,6 +69,6 @@ void ImageRenderer::render(
                 << "\u2580";
         }
 
-            std::cout << "\x1b[H";
+        std::cout << "\x1b[0m\n";
     }
 }

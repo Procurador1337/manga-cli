@@ -12,9 +12,13 @@ public:
     std::string getID() const;
     std::string getName() const;
 
+    void setChapterCount(int Count);
+    int getChapterCount() const;
+
 private:
     std::string ID;
     std::string Name;
+    int ChapterCount = -1;
 };
 
 #endif

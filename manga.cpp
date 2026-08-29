@@ -16,3 +16,13 @@ std::string Manga::getName() const
 {
     return Name;
 }
+
+void Manga::setChapterCount(int Count)
+{
+    ChapterCount = Count;
+}
+
+int Manga::getChapterCount() const
+{
+    return ChapterCount;
+}

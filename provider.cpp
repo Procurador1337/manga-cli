@@ -69,7 +69,9 @@ std::vector<Manga> Provider::searchManga(
                     .value("title")
                     .toObject();
 
-            Results.emplace_back(ID, extractTitle(TitleObject));
+            Manga NewManga(ID, extractTitle(TitleObject));
+            NewManga.setChapterCount(getChapterCount(ID));
+            Results.push_back(NewManga);
         }
     }
     catch (const std::exception& Error)
@@ -206,4 +208,55 @@ std::vector<std::string> Provider::getPageURLs(
     }
 
     return PageURLs;
+}
+
+int Provider::getChapterCount(
+    const std::string& MangaID
+    )
+{
+    NetworkClient Client;
+
+    QUrl RequestURL(
+        QString::fromStdString(
+            "https://api.mangadex.org/manga/" + MangaID + "/aggregate"
+            )
+        );
+
+    QUrlQuery Parameters;
+    Parameters.addQueryItem("translatedLanguage[]", "en");
+
+    RequestURL.setQuery(Parameters);
+
+    int Count = 0;
+
+    try
+    {
+        std::string Response =
+            Client.get(RequestURL.toString().toStdString());
+
+        QJsonDocument Document =
+            QJsonDocument::fromJson(QByteArray::fromStdString(Response));
+
+        QJsonObject VolumesObject =
+            Document.object().value("volumes").toObject();
+
+        const QStringList VolumeKeys = VolumesObject.keys();
+
+        for (const QString& VolumeKey : VolumeKeys)
+        {
+            QJsonObject VolumeObject =
+                VolumesObject.value(VolumeKey).toObject();
+
+            QJsonObject ChaptersObject =
+                VolumeObject.value("chapters").toObject();
+
+            Count += ChaptersObject.size();
+        }
+    }
+    catch (const std::exception& Error)
+    {
+        std::cerr << "Network error: " << Error.what() << '\n';
+    }
+
+    return Count;
 }

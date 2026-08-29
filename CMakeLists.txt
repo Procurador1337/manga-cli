@@ -21,6 +21,7 @@ add_executable(manga-cli
     terminalutils.h terminalutils.cpp
     imagerender.h imagerender.cpp
     pageviewer.h pageviewer.cpp
+    mpvviewer.h mpvviewer.cpp
 )
 find_package(Qt6 REQUIRED COMPONENTS Network Gui)
 target_link_libraries(manga-cli PRIVATE Qt6::Network Qt6::Gui)

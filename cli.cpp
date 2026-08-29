@@ -1,8 +1,8 @@
 #include "cli.h"
-#include "pageviewer.h"
 #include "mangasearch.h"
 #include "chaptersearch.h"
 #include "selection.h"
+#include "pageviewer.h"
 
 #include <iostream>
 #include <string>
@@ -29,6 +29,16 @@ int CLI::run()
     std::vector<Manga> MangaResults =
         MangaSearcher.search(MangaName);
 
+    if (MangaResults.empty())
+    {
+        std::cout
+            << "\nNo manga found for \""
+            << MangaName
+            << "\".\n";
+
+        return 1;
+    }
+
     std::cout << "\nResults:\n\n";
 
     for (std::size_t Index = 0;
@@ -39,7 +49,9 @@ int CLI::run()
             << Index + 1
             << ". "
             << MangaResults[Index].getName()
-            << '\n';
+            << " ("
+            << MangaResults[Index].getChapterCount()
+            << " chapters)\n";
     }
 
     std::cout << '\n';
@@ -63,6 +75,16 @@ int CLI::run()
     {
         ChapterResults =
             ChapterSearcher.search(SelectedManga, Offset, Total);
+
+        if (ChapterResults.empty())
+        {
+            std::cout
+                << "\nNo chapters found for \""
+                << SelectedManga.getName()
+                << "\".\n";
+
+            return 1;
+        }
 
         std::cout << "\n"
                   << SelectedManga.getName()
@@ -111,17 +133,73 @@ int CLI::run()
     Chapter SelectedChapter =
         ChapterResults[ChapterChoice - 1];
 
-    std::cout << "\nSelected:\n";
-    std::cout << "Manga: "
-              << SelectedManga.getName()
-              << '\n';
+    int LocalIndex = ChapterChoice - 1;
 
-    std::cout << "Chapter: "
-              << SelectedChapter.getName()
-              << '\n';
+    while (true)
+    {
+        std::cout << "\nSelected:\n";
+        std::cout << "Manga: "
+                  << SelectedManga.getName()
+                  << '\n';
 
-    PageViewer Viewer;
-    Viewer.view(SelectedChapter.getID());
+        std::cout << "Chapter: "
+                  << SelectedChapter.getName()
+                  << '\n';
+
+        PageViewer Viewer;
+        Viewer.view(SelectedChapter.getID());
+
+        bool HasNext = false;
+        Chapter NextChapter("", "");
+
+        if (LocalIndex + 1 < static_cast<int>(ChapterResults.size()))
+        {
+            HasNext = true;
+            NextChapter = ChapterResults[LocalIndex + 1];
+            LocalIndex = LocalIndex + 1;
+        }
+        else if (Offset + static_cast<int>(ChapterResults.size()) < Total)
+        {
+            int NewOffset =
+                Offset + static_cast<int>(ChapterResults.size());
+            int NewTotal = 0;
+
+            std::vector<Chapter> NextPageResults =
+                ChapterSearcher.search(SelectedManga, NewOffset, NewTotal);
+
+            if (!NextPageResults.empty())
+            {
+                Offset = NewOffset;
+                Total = NewTotal;
+                ChapterResults = NextPageResults;
+                LocalIndex = 0;
+                HasNext = true;
+                NextChapter = ChapterResults[0];
+            }
+        }
+
+        if (!HasNext)
+        {
+            std::cout << "\nNo more chapters.\n";
+            break;
+        }
+
+        std::cout
+            << "\nContinue to \""
+            << NextChapter.getName()
+            << "\"? (y/n): ";
+
+        std::string Response;
+        std::getline(std::cin, Response);
+
+        if (Response.empty() ||
+            (Response[0] != 'y' && Response[0] != 'Y'))
+        {
+            break;
+        }
+
+        SelectedChapter = NextChapter;
+    }
 
     return 0;
 }
