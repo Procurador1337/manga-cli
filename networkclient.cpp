@@ -9,6 +9,7 @@
 
 #include <stdexcept>
 
+
 std::string NetworkClient::get(const std::string& URL)
 {
     QUrl RequestURL(QString::fromStdString(URL));
@@ -28,6 +29,10 @@ std::string NetworkClient::get(const std::string& URL)
     Request.setTransferTimeout(10000);
 
     QNetworkReply* Reply = Manager.get(Request);
+
+
+//The api requires this to work properly
+    Request.setHeader(QNetworkRequest::UserAgentHeader, "manga-cli (+https://github.com/Procurador1337/manga-cli)");
 
     QEventLoop Loop;
 
