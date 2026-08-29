@@ -5,7 +5,7 @@ project(manga-cli LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Network)
+find_package(Qt6 REQUIRED COMPONENTS Network Gui)
 
 add_executable(manga-cli
     main.cpp
@@ -18,10 +18,8 @@ add_executable(manga-cli
     chaptersearch.h chaptersearch.cpp
     provider.h provider.cpp
     networkclient.h networkclient.cpp
-    terminalutils.h terminalutils.cpp
-    imagerender.h imagerender.cpp
     pageviewer.h pageviewer.cpp
     mpvviewer.h mpvviewer.cpp
 )
-find_package(Qt6 REQUIRED COMPONENTS Network Gui)
+
 target_link_libraries(manga-cli PRIVATE Qt6::Network Qt6::Gui)
