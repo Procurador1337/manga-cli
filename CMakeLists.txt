@@ -23,3 +23,6 @@ add_executable(manga-cli
 )
 
 target_link_libraries(manga-cli PRIVATE Qt6::Network Qt6::Gui)
+install(TARGETS manga-cli
+RUNTIME DESTINATION bin
+)
