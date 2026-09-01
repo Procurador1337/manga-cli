@@ -10,6 +10,7 @@ class MangaSearch
 {
 public:
     std::vector<Manga> search(const std::string& Query);
+    std::vector<Manga> search(const std::string& Query, const std::string& Language);
 };
 
 #endif

@@ -1,10 +1,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-class config
+#include <string>
+
+class Config
 {
 public:
-    config();
+    static std::string loadLanguage();
+    static void saveLanguage(const std::string& LanguageCode);
 };
 
-#endif // CONFIG_H
+#endif
