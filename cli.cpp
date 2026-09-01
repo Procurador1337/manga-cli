@@ -13,6 +13,7 @@
 int CLI::run()
 {
     std::string Language = resolveLanguage();
+
     std::string MangaName;
 
     std::cout << "Manga CLI\n\n";
@@ -30,7 +31,7 @@ int CLI::run()
     Selection Selector;
 
     std::vector<Manga> MangaResults =
-        MangaSearcher.search(MangaName);
+        MangaSearcher.search(MangaName, Language);
 
     if (MangaResults.empty())
     {
@@ -77,7 +78,7 @@ int CLI::run()
     while (true)
     {
         ChapterResults =
-            ChapterSearcher.search(SelectedManga, Offset, Total);
+            ChapterSearcher.search(SelectedManga, Offset, Total, Language);
 
         if (ChapterResults.empty())
         {
@@ -168,7 +169,7 @@ int CLI::run()
             int NewTotal = 0;
 
             std::vector<Chapter> NextPageResults =
-                ChapterSearcher.search(SelectedManga, NewOffset, NewTotal);
+                ChapterSearcher.search(SelectedManga, NewOffset, NewTotal, Language);
 
             if (!NextPageResults.empty())
             {
