@@ -30,7 +30,8 @@ std::string extractTitle(const QJsonObject& TitleObject)
 }
 
 std::vector<Manga> Provider::searchManga(
-    const std::string& Query
+    const std::string& Query,
+    const std::string& Language
     )
 {
     NetworkClient Client;
@@ -70,7 +71,7 @@ std::vector<Manga> Provider::searchManga(
                     .toObject();
 
             Manga NewManga(ID, extractTitle(TitleObject));
-            NewManga.setChapterCount(getChapterCount(ID));
+            NewManga.setChapterCount(getChapterCount(ID, Language));
             Results.push_back(NewManga);
         }
     }
@@ -85,7 +86,8 @@ std::vector<Manga> Provider::searchManga(
 std::vector<Chapter> Provider::getChapters(
     const std::string& MangaID,
     int Offset,
-    int& OutTotal
+    int& OutTotal,
+    const std::string& Language
     )
 {
     NetworkClient Client;
@@ -101,7 +103,7 @@ std::vector<Chapter> Provider::getChapters(
         );
 
     QUrlQuery Parameters;
-    Parameters.addQueryItem("translatedLanguage[]", "en");
+    Parameters.addQueryItem("translatedLanguage[]", QString::fromStdString(Language));
     Parameters.addQueryItem("order[volume]", "asc");
     Parameters.addQueryItem("order[chapter]", "asc");
     Parameters.addQueryItem("limit", "100");
@@ -211,7 +213,8 @@ std::vector<std::string> Provider::getPageURLs(
 }
 
 int Provider::getChapterCount(
-    const std::string& MangaID
+    const std::string& MangaID,
+    const std::string& Language
     )
 {
     NetworkClient Client;
@@ -223,7 +226,7 @@ int Provider::getChapterCount(
         );
 
     QUrlQuery Parameters;
-    Parameters.addQueryItem("translatedLanguage[]", "en");
+    Parameters.addQueryItem("translatedLanguage[]", QString::fromStdString(Language));
 
     RequestURL.setQuery(Parameters);
 

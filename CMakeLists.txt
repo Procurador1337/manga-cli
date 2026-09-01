@@ -20,6 +20,7 @@ add_executable(manga-cli
     networkclient.h networkclient.cpp
     pageviewer.h pageviewer.cpp
     mpvviewer.h mpvviewer.cpp
+    config.h config.cpp
 )
 
 target_link_libraries(manga-cli PRIVATE Qt6::Network Qt6::Gui)

@@ -2,14 +2,17 @@
 #include "mangasearch.h"
 #include "chaptersearch.h"
 #include "selection.h"
+#include "config.h"
 #include "pageviewer.h"
 
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include <vector>
 
 int CLI::run()
 {
+    std::string Language = resolveLanguage();
     std::string MangaName;
 
     std::cout << "Manga CLI\n\n";
@@ -202,4 +205,41 @@ int CLI::run()
     }
 
     return 0;
+}
+
+std::string CLI::resolveLanguage()
+{
+    std::string Language = Config::loadLanguage();
+
+    if (!Language.empty())
+    {
+        return Language;
+    }
+
+    std::cout
+        << "First-time setup.\n"
+        << "Enter your preferred chapter language code (e.g. en, pt-br, es, es-la, fr): ";
+
+    std::getline(std::cin, Language);
+
+    std::transform(
+        Language.begin(),
+        Language.end(),
+        Language.begin(),
+        ::tolower
+        );
+
+    if (Language.empty())
+    {
+        Language = "en";
+    }
+
+    Config::saveLanguage(Language);
+
+    std::cout
+        << "Language set to \""
+        << Language
+        << "\". You can change this later with: manga-cli --setlang <code>\n\n";
+
+    return Language;
 }
