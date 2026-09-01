@@ -1,6 +1,8 @@
 #include "cli.h"
 #include "config.h"
 
+#include <QCoreApplication>
+
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -39,7 +41,10 @@ int main(int argc, char* argv[])
         }
     }
 
-    CLI App;
+//Changed this to deal better with the lang changes
+    QCoreApplication App(argc, argv);
 
-    return App.run();
+    CLI Cli;
+
+    return Cli.run();
 }
