@@ -52,6 +52,17 @@ sudo cmake --install .
 ```bash
 manga-cli
 ```
+## Language
+
+On first run, manga-cli asks for your preferred chapter language (a MangaDex language code, e.g. `en`, `pt-br`, `es`, `es-la`, `fr`). This is saved to a config file and used for all searches and chapter listings from then on.
+
+To change it later:
+
+```bash
+manga-cli --setlang pt-br
+```
+
+The config file lives at `~/.config/manga-cli/config.json` and can also be edited directly.
 
 Enter a manga title, pick a result, pick a chapter, and mpv will open with the pages. Use mpv's controls to move between pages:
 
