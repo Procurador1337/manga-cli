@@ -44,12 +44,13 @@ mkdir build
 cd build
 cmake ..
 cmake --build .
+sudo cmake --install .
 ```
 
 ## Usage
 
 ```bash
-./manga-cli
+manga-cli
 ```
 
 Enter a manga title, pick a result, pick a chapter, and mpv will open with the pages. Use mpv's controls to move between pages:
@@ -62,7 +63,7 @@ After a chapter finishes, you'll be asked whether to continue to the next one.
 
 ## Credit
 
-This tool uses the [MangaDex API](https://api.mangadex.org/docs/swagger.html) to search for and retrieve manga information and chapter pages. All manga content, chapter translations, and page images are hosted and provided by MangaDex and the scanlation groups who uploaded them. manga-cli does not host, store, or modify any manga content itself — it only queries the API and displays what it returns.
+This tool uses the [MangaDex API](https://api.mangadex.org/docs/swagger.html) to search for and retrieve manga information and chapter pages. All manga content, chapter translations, and page images are hosted and provided by MangaDex and the scanlation groups who uploaded them. manga-cli does not host, store, or modify any manga content itself. It only requires the API and it will return what is available.
 
 Full credit for translations goes to the individual scanlation groups responsible for each chapter, as attributed by MangaDex.
 
